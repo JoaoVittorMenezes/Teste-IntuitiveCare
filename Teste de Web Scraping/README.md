@@ -28,50 +28,44 @@ Instalar as dependências:
  
 -bash:  pip install selenium requests 
 
-📁 **Estrutura de Arquivos**
-
-/Teste de Web Scraping
-  ├── scraping.py    # Script principal
-  ├── README.md              # Este arquivo
-
 🚀 **Como Executar**
 
-Baixe o ChromeDriver compatível com sua versão do Chrome: https://chromedriver.chromium.org/downloads
+- Baixe o ChromeDriver compatível com sua versão do Chrome: https://chromedriver.chromium.org/downloads
 
-Atualize o caminho do ChromeDriver no script:
+- Atualize o caminho do ChromeDriver no script:
 
--bash:   chrome_driver_path = r'CAMINHO_PARA_O_CHROMEDRIVER'
+- -bash:   chrome_driver_path = r'CAMINHO_PARA_O_CHROMEDRIVER'
 
-Execute o script:
+- Execute o script:
 
--bash:   python scraping.py
+- -bash:   python scraping.py
 
 📌 **Saída Esperada** 
 
-Arquivo Anexos.zip contendo os PDFs baixados.
+- Arquivo Anexos.zip contendo os PDFs baixados.
 
-Mensagem no terminal:
+- Mensagem no terminal:
 
--bash:  Arquivos PDF foram baixados e compactados em Anexos.zip.
+- -bash:  Arquivos PDF foram baixados e compactados em Anexos.zip.
 
 ⚠️ **Observações Importantes**
 
-Certifique-se de ter:
+- Certifique-se de ter:
 
-Conexão com a internet
+- Conexão com a internet
 
-Permissões de escrita no diretório de execução
+- Permissões de escrita no diretório de execução
 
-O script:
+- O script:
 
-Pode levar alguns minutos para executar
+- Pode levar alguns minutos para executar
 
-Fecha automaticamente a janela do navegador ao finalizar
+- Fecha automaticamente a janela do navegador ao finalizar
 
-Remove os arquivos PDF após a compactação
+- Remove os arquivos PDF após a compactação
 
-Em caso de erro:
+- Em caso de erro:
 
-Verifique se o ChromeDriver está na versão correta
+- Verifique se o ChromeDriver está na versão correta
 
-Confira se os links no site da ANS não foram alterados
+- Confira se os links no site da ANS não foram alterados
