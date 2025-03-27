@@ -1,4 +1,4 @@
-# Testes Técnicos para Programa de Estágio - [Nome da Empresa]
+# Testes Técnicos para a IntuitiveCare
 
 Repositório contendo as soluções para os 4 desafios técnicos do processo seletivo.
 
