@@ -4,13 +4,11 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import time
 import requests
 import zipfile
 import os
 
 # Caminho para o ChromeDriver
-
 chrome_driver_path = r'C:\\Users\\joaov\\OneDrive\\Área de Trabalho\\chromedriver-win64\\chromedriver.exe' # Atualize para o caminho correto
 
 # Configuração do Selenium
