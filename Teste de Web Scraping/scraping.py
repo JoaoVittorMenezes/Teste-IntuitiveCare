@@ -1,65 +1,67 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import time
+import requests
 import zipfile
-import io
-import camelot
-import pandas as pd
-import csv
+import os
 
-# Caminho do ZIP e nome do PDF dentro dele
-zip_path = "Anexos.zip"
-pdf_name = "Anexo_I_Rol_2021RN_465.2021_RN627L.2024.pdf"
+# Caminho para o ChromeDriver
 
-# Extraindo o PDF do ZIP para a memória
-with zipfile.ZipFile(zip_path, "r") as z:
-    with z.open(pdf_name) as pdf_file:
-        pdf_bytes = io.BytesIO(pdf_file.read())
+chrome_driver_path = r'C:\\Users\\joaov\\OneDrive\\Área de Trabalho\\chromedriver-win64\\chromedriver.exe' # Atualize para o caminho correto
 
-# Extração das tabelas do PDF
-tables = camelot.read_pdf(
-    pdf_bytes,
-    pages="3-181",
-    flavor="stream",
-    strip_text='\n',
-    edge_tol=600,
-    row_tol=15,
-    column_tol=15
+# Configuração do Selenium
+chrome_options = Options()
+
+# Use o Service para passar o caminho do ChromeDriver
+service = Service(executable_path=chrome_driver_path)
+driver = webdriver.Chrome(service=service, options=chrome_options)
+
+# Acessa o site
+url = 'https://www.gov.br/ans/pt-br/acesso-a-informacao/participacao-da-sociedade/atualizacao-do-rol-de-procedimentos'
+driver.get(url)
+
+# Espera até que o link do Anexo I esteja presente
+link_anexo_i = WebDriverWait(driver, 10).until(
+    EC.presence_of_element_located((By.XPATH, "//a[contains(@href, 'Anexo_I_Rol')]"))
 )
 
-print(f"Tabelas extraídas: {len(tables)}")
+# Agora você pode acessar o atributo 'href' do link
+pdf_url_i = link_anexo_i.get_attribute('href')
 
-if len(tables) > 0:
-    df_final = pd.concat([table.df for table in tables], ignore_index=True)
-    
-    # Ajustando cabeçalhos
-    df_final.columns = df_final.iloc[0]
-    df_final = df_final.drop(0).reset_index(drop=True)
-    
-    # Limpeza de dados
-    df_final = df_final.apply(lambda x: x.str.strip() if x.dtype == "object" else x)
+# Encontrar o link do Anexo II
+link_anexo_ii = driver.find_element(By.XPATH, "//a[contains(@href, 'Anexo_II')]")
+pdf_url_ii = link_anexo_ii.get_attribute('href')
 
-    # Substituir abreviações de OD e AMB conforme legenda do rodapé
-    legenda = {
-        "OD": "Procedimentos Odontológicos",
-        "AMB": "Procedimentos Ambulatoriais"
-    }
-    df_final.rename(columns=legenda, inplace=True)
+# Função para baixar os PDFs
+def download_pdf(pdf_url, pdf_name):
+    pdf_response = requests.get(pdf_url)
+    with open(pdf_name, 'wb') as f:
+        f.write(pdf_response.content)
 
-    # Nome do arquivo CSV
-    csv_filename = "Teste_SeuNome.csv"
+# Baixar o PDF do Anexo I
+pdf_name_i = pdf_url_i.split('/')[-1]  # Extrai o nome do arquivo a partir da URL
+download_pdf(pdf_url_i, pdf_name_i)
 
-    # Salvando CSV
-    df_final.to_csv(
-        csv_filename,
-        index=False,
-        sep=";",  # Ponto e vírgula como separador
-        quoting=csv.QUOTE_MINIMAL,
-        encoding="utf-8-sig"
-    )
+# Baixar o PDF do Anexo II
+pdf_name_ii = pdf_url_ii.split('/')[-1]  # Extrai o nome do arquivo a partir da URL
+download_pdf(pdf_url_ii, pdf_name_ii)
 
-    # Compactando o CSV em um ZIP
-    zip_output = f"Teste_SeuNome.zip"
-    with zipfile.ZipFile(zip_output, "w", zipfile.ZIP_DEFLATED) as z:
-        z.write(csv_filename)
+# Compactar os arquivos PDF
 
-    print(f"Arquivo {zip_output} gerado com sucesso!")
-else:
-    print("Nenhuma tabela encontrada. Tente ajustar os parâmetros.")
+zip_filename = "Anexos.zip"
+with zipfile.ZipFile(zip_filename, 'w') as zipf:
+    zipf.write(pdf_name_i)
+    zipf.write(pdf_name_ii)
+
+# Limpar os arquivos PDF após a compactação (opcional)
+os.remove(pdf_name_i)
+os.remove(pdf_name_ii)
+
+# Fechar o navegador
+driver.quit()
+
+print(f"Arquivos PDF foram baixados e compactados em {zip_filename}.")
