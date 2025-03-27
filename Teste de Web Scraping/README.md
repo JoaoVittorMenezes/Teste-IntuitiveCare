@@ -1,4 +1,4 @@
-# README - Desafio 1: Web Scraping ANS
+# README - Desafio 1: Web Scraping
 
 📋 **Descrição do Projeto**  
 Script Python que automatiza o download dos Anexos I e II do Rol de Procedimentos da Agência Nacional de Saúde Suplementar (ANS) e os compacta em um arquivo ZIP.
