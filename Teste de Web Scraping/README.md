@@ -1,4 +1,5 @@
 # README - Desafio 1: Web Scraping
+# README - Desafio 1: Web Scraping ANS
 
 📋 **Descrição do Projeto**  
 Script Python que automatiza o download dos Anexos I e II do Rol de Procedimentos da Agência Nacional de Saúde Suplementar (ANS) e os compacta em um arquivo ZIP.
@@ -24,39 +25,37 @@ Ter instalado:
 - ChromeDriver compatível com sua versão do Chrome  
 
 Instalar as dependências:  
-```bash
-pip install selenium requests
+ 
+-bash:  pip install selenium requests 
+
+📁 **Estrutura de Arquivos**
 
 /Teste de Web Scraping
   ├── scraping.py    # Script principal
   ├── README.md              # Este arquivo
 
-🚀 Como Executar
+🚀 **Como Executar**
 
-Baixe o ChromeDriver compatível com sua versão do Chrome:
+Baixe o ChromeDriver compatível com sua versão do Chrome: https://chromedriver.chromium.org/downloads
 
 Atualize o caminho do ChromeDriver no script:
 
-python
-Copiar
-Editar
-chrome_driver_path = r'CAMINHO_PARA_O_CHROMEDRIVER'
+-bash:   chrome_driver_path = r'CAMINHO_PARA_O_CHROMEDRIVER'
+
 Execute o script:
 
-bash
-Copiar
-Editar
-python web_scraping_ans.py
-📌 Saída Esperada
+-bash:   python scraping.py
+
+📌 **Saída Esperada** 
+
 Arquivo Anexos.zip contendo os PDFs baixados.
 
 Mensagem no terminal:
 
-css
-Copiar
-Editar
-Arquivos PDF foram baixados e compactados em Anexos.zip.
-⚠️ Observações Importantes
+-bash:  Arquivos PDF foram baixados e compactados em Anexos.zip.
+
+⚠️ **Observações Importantes**
+
 Certifique-se de ter:
 
 Conexão com a internet
